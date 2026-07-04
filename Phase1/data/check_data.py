@@ -1,7 +1,7 @@
 from datasets import load_dataset
 import pandas as pd
 
-dataset = load_dataset("introtogenairize/gen-ai-course-feedback")
+dataset = load_dataset("kshitij230/twitter_aspect_based_sentiment_analysis")
 
 print(dataset)
 print()
