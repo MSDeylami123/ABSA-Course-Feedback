@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -10,6 +11,7 @@ from sklearn.metrics import (
     f1_score,
     classification_report,
     confusion_matrix,
+    ConfusionMatrixDisplay,
 )
 
 # --------------------------------------------------
@@ -67,6 +69,24 @@ print("\nLabel distribution:")
 print(Y.value_counts().sort_index())
 
 # --------------------------------------------------
+# Plot 1: Dataset Class Distribution
+# --------------------------------------------------
+label_names = ["Negative", "Neutral", "Positive"]
+counts = Y.value_counts().sort_index()
+
+plt.figure(figsize=(6, 4))
+plt.bar(label_names, counts)
+plt.title("Dataset Class Distribution")
+plt.xlabel("Sentiment Class")
+plt.ylabel("Number of Samples")
+
+for i, count in enumerate(counts):
+    plt.text(i, count + 10, str(count), ha="center")
+
+plt.tight_layout()
+plt.show()
+
+# --------------------------------------------------
 # Step 4: Train/Test Split
 # --------------------------------------------------
 print("\nSplitting dataset...")
@@ -95,11 +115,10 @@ vectorizer = TfidfVectorizer(
     min_df=2
 )
 
-# IMPORTANT:
-# Fit ONLY on the training data
+# Fit ONLY on training data
 X_train = vectorizer.fit_transform(X_train_text)
 
-# Transform the test data using the fitted vectorizer
+# Transform test data
 X_test = vectorizer.transform(X_test_text)
 
 print("Training feature matrix:", X_train.shape)
@@ -173,8 +192,44 @@ print(
     )
 )
 
-print("\nConfusion Matrix")
-print(confusion_matrix(y_test, predictions))
+# --------------------------------------------------
+# Plot 2: Evaluation Metrics
+# --------------------------------------------------
+metrics = ["Accuracy", "Precision", "Recall", "Macro F1"]
+scores = [accuracy, precision, recall, f1]
+
+plt.figure(figsize=(7, 4))
+bars = plt.bar(metrics, scores)
+
+plt.ylim(0, 1)
+plt.ylabel("Score")
+plt.title("Baseline Evaluation Metrics")
+
+for bar, score in zip(bars, scores):
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        score + 0.02,
+        f"{score:.3f}",
+        ha="center"
+    )
+
+plt.tight_layout()
+plt.show()
+
+# --------------------------------------------------
+# Plot 3: Confusion Matrix
+# --------------------------------------------------
+cm = confusion_matrix(y_test, predictions)
+
+disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=["Negative", "Neutral", "Positive"]
+)
+
+disp.plot(cmap="Blues")
+plt.title("Confusion Matrix")
+plt.tight_layout()
+plt.show()
 
 # --------------------------------------------------
 # Step 9: Custom Predictions
