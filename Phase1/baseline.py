@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -19,9 +20,10 @@ from sklearn.metrics import (
 # --------------------------------------------------
 print("Loading dataset...")
 
-df = pd.read_csv(
-    r"C:\Users\USER\Desktop\ABSA-Course-Feedback\Phase1\data\feedback.csv"
-)
+BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = BASE_DIR / "data" / "feedback.csv"
+
+df = pd.read_csv(DATA_PATH)
 
 # Remove leading/trailing spaces from column names
 df.columns = df.columns.str.strip()
