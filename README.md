@@ -34,12 +34,21 @@ Sentiment classes:
 ```
 project/
 │
-├── data/
-│   └── feedback.csv
-│
-├── baseline.py
 ├── README.md
-└── requirements.txt (optional)
+│
+├── Phase1/
+│   ├── data/
+│   │   └── feedback.csv
+│   ├── baseline.py
+│   ├── report.docx
+│   └── report.pdf
+│
+└── Phase2/
+    ├── data/
+    │   └── feedback.csv
+    ├── baseline.py
+    ├── report2.docx
+    └── report2.pdf
 ```
 
 ---
