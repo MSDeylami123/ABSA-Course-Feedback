@@ -8,6 +8,10 @@ The baseline combines TF-IDF feature extraction with Logistic Regression and was
 
 ---
 
+## GitHub Repository
+
+Repository: https://github.com/MSDeylami123/ABSA-Course-Feedback
+
 ## Dataset
 
 The project uses the `feedback.csv` dataset containing aspect-level sentiment annotations.
